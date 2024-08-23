@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useStoreActions.ts';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { closeCart } from '../../../store/cart';
 import { CartProps } from '../interfaces.ts';
-import { TicketResume, Typography } from '../../../components';
+import { Container, TicketResume, Typography } from '../../../components';
+import { IconContext } from 'react-icons';
 
 const Overlay = styled.div<CartProps>`
   position: absolute;
@@ -47,16 +49,25 @@ const CartResume = () => {
         ref={ref}
         active={cart.open}
       >
-        <Typography
-          fontSize={24}
-          fontWeight={600}
+        <Container
+          width='100%'
+          direction="row"
+          justify="space-between"
+          alignItems="center"
           mb={32}
         >
-          Resumen de compras
-        </Typography>
-
+          <Typography
+            fontSize={24}
+            fontWeight={600}
+          >
+            Resumen de compras
+          </Typography>
+          <IconContext.Provider value={{ size: "32px" }}>
+            <IoMdCloseCircleOutline onClick={() => dispatch(closeCart())} />
+          </IconContext.Provider>
+        </Container>
         {cart.tickets.length > 0 ? (
-          <TicketResume />
+          <TicketResume/>
         ) : (
           <Typography
             fontSize={18}
